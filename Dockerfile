@@ -60,7 +60,7 @@ RUN set -eux; \
   chmod +x /usr/local/bin/php-fpm-healthcheck; \
   echo "pm.status_path = /status" >> /usr/local/etc/php-fpm.d/zz-docker.conf;
 
-COPY php.ini //usr/local/etc/php/php.ini
+COPY php.ini /usr/local/etc/php/php.ini
 
 COPY --from=composer:2.0 /usr/bin/composer /usr/local/bin/
 
