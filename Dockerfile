@@ -12,7 +12,7 @@ HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 CMD ["php
 
 RUN set -eux; \
 	\
-  apk add --update vim git patch fcgi; \
+  apk add --update vim mysql-client git patch fcgi; \
 	apk add --no-cache --virtual .build-deps \
 		coreutils \
 		freetype-dev \
