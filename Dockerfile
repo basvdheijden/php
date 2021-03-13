@@ -34,13 +34,16 @@ RUN set -eux; \
 	libmemcached-dev \
 	; \
 	\
+	\
 	printf "\n" | pecl install -o -f xdebug memcache \
+	; \
 	\
 	docker-php-ext-configure gd \
 	--with-freetype \
 	--with-webp \
 	--with-jpeg \
 	; \
+	\
 	\
 	docker-php-ext-install -j "$(nproc)" \
 	gd \
@@ -49,6 +52,7 @@ RUN set -eux; \
 	pdo_pgsql \
 	zip \
 	; \
+	\
 	\
 	runDeps="$( \
 	scanelf --needed --nobanner --format '%n#p' --recursive /usr/local \
