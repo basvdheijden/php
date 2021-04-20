@@ -12,7 +12,7 @@ HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 CMD ["php
 
 RUN set -eux; \
 	\
-	apk add --update vim mysql-client git patch fcgi; \
+	apk add --update tzdata vim mysql-client git patch fcgi; \
 	apk add --no-cache --virtual .build-deps \
 	coreutils \
 	freetype-dev \
@@ -33,6 +33,10 @@ RUN set -eux; \
 	zlib-dev \
 	libmemcached-dev \
 	; \
+	\
+	\
+	cp /usr/share/zoneinfo/Europe/Amsterdam /etc/localtime; \
+	echo "Europe/Amsterdam" > /etc/timezone; \
 	\
 	\
 	printf "\n" | pecl install -o -f xdebug memcache \
