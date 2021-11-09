@@ -50,6 +50,7 @@ RUN set -eux; \
 	\
 	\
 	docker-php-ext-install -j "$(nproc)" \
+       sockets \
 	gd \
 	opcache \
 	pdo_mysql \
@@ -65,7 +66,7 @@ RUN set -eux; \
 	| awk 'system("[ -e /usr/local/lib/" $1 " ]") == 0 { next } { print "so:" $1 }' \
 	)"; \
 	apk add --no-network --virtual .drupal-phpexts-rundeps $runDeps; \
-	docker-php-ext-enable memcache xdebug; \
+	docker-php-ext-enable sockets memcache xdebug; \
 	apk del --no-network .build-deps; \
 	wget -O /usr/local/bin/php-fpm-healthcheck https://raw.githubusercontent.com/renatomefi/php-fpm-healthcheck/master/php-fpm-healthcheck; \
 	chmod +x /usr/local/bin/php-fpm-healthcheck; \
