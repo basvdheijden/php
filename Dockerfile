@@ -78,10 +78,7 @@ COPY php.ini /usr/local/etc/php/php.ini
 COPY --from=composer:2.0 /usr/bin/composer /usr/local/bin/
 
 RUN composer global require drush/drush:10.4.0; \
-	ln -s /root/.composer/vendor/bin/drush /usr/bin/drush; \
-	apk add busybox-initscripts; \
-	rc-service crond start && rc-update add crond; \
-	echo "*/5 * * * * /usr/bin/drush -r /var/www/web/ core:cron > /dev/null 2>&1" >> /etc/crontabs/root;
+	ln -s /root/.composer/vendor/bin/drush /usr/bin/drush;
 
 COPY start.sh /start.sh
 CMD ["/start.sh"]
