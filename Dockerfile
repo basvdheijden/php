@@ -1,4 +1,4 @@
-FROM php:8.0-fpm-alpine3.12
+FROM php:8.1-fpm-alpine3.17
 
 ENV XDEBUG_MODE 'off'
 ENV XDEBUG_HOST 'localhost'
@@ -12,9 +12,10 @@ HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 CMD ["php
 
 RUN set -eux; \
 	\
-	apk add --update tzdata vim mysql-client git patch fcgi; \
+	apk add --update linux-headers tzdata vim mysql-client git patch fcgi; \
 	apk add --no-cache --virtual .build-deps \
 	coreutils \
+	linux-headers \
 	freetype-dev \
 	libjpeg-turbo-dev \
 	libpng-dev \
@@ -78,7 +79,8 @@ COPY php.ini /usr/local/etc/php/php.ini
 COPY --from=composer:2.0 /usr/bin/composer /usr/local/bin/
 
 RUN composer global require drush/drush:10.4.0; \
-	ln -s /root/.composer/vendor/bin/drush /usr/bin/drush;
+	ln -s /root/.composer/vendor/bin/drush /usr/bin/drush; \
+	apk add busybox-extras;
 
 COPY start.sh /start.sh
 CMD ["/start.sh"]
